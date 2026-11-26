@@ -69,3 +69,22 @@ export async function fetchPersonalHistory(runId = null) {
   const { data } = await api.get('/personal/history', { params });
   return data;
 }
+
+export async function fetchMentorRuns() {
+  const { data } = await api.get('/mentor/runs');
+  return data;
+}
+
+export async function fetchMentorRunContext(runId) {
+  const { data } = await api.get(`/mentor/runs/${encodeURIComponent(runId)}`);
+  return data;
+}
+
+export async function requestMentorAdvisory({ section, runId = null, month = null }) {
+  const { data } = await api.post('/mentor/request', {
+    section,
+    runId,
+    month,
+  });
+  return data;
+}

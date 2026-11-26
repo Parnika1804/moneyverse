@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import LogoutPage from './pages/LogoutPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import PersonalFinancePage from './pages/PersonalFinancePage.jsx';
+import AiMentorPage from './pages/AiMentorPage.jsx';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage.jsx';
 
 export default function App() {
@@ -31,10 +32,7 @@ export default function App() {
               path="learning-hub"
               element={<ModulePlaceholderPage moduleKey="learning-hub" />}
             />
-            <Route
-              path="ai-mentor"
-              element={<ModulePlaceholderPage moduleKey="ai-mentor" />}
-            />
+            <Route path="ai-mentor" element={<AiMentorPage />} />
           </Route>
         </Route>
 
