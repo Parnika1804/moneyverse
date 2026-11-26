@@ -12,8 +12,14 @@ const serverRoot = path.resolve(__dirname, '..', '..');
 let initializedApp = null;
 
 function resolveCredentialsPath() {
-  const credsEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  if (!credsEnv || path.isAbsolute(credsEnv)) {
+  const credsEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim();
+  if (!credsEnv) {
+    // Cloud Run and GCP runtimes provide Application Default Credentials via metadata server
+    delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    return;
+  }
+
+  if (path.isAbsolute(credsEnv)) {
     return;
   }
 

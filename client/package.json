@@ -12,7 +12,6 @@
     "axios": "^1.8.1",
     "firebase": "^13.4.0",
     "lucide-react": "^0.475.0",
-    "moneyverse": "file:..",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.2.0",

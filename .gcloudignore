@@ -1,0 +1,48 @@
+# Git & VCS
+.git
+.gitignore
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Secrets & Environment Variables (NEVER upload to Google Cloud Build / Cloud Run)
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Service Account Keys, Private Keys & AI Secrets
+serviceAccountKey.json
+**/serviceAccountKey.json
+*serviceAccount*.json
+**/*serviceAccount*.json
+*firebase-adminsdk*.json
+**/*firebase-adminsdk*.json
+gcp-key*.json
+**/gcp-key*.json
+credentials.json
+**/credentials.json
+*gemini*.json
+**/*gemini*.json
+*.pem
+**/*.pem
+*.key
+**/*.key
+*.p12
+**/*.p12
+
+# Local Build Outputs & Tests
+dist/
+**/dist/
+build/
+**/build/
+server/tests/
+
+# Logs & Editor Files
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
