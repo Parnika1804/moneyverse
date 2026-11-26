@@ -7,6 +7,7 @@ import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import LogoutPage from './pages/LogoutPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
+import PersonalFinancePage from './pages/PersonalFinancePage.jsx';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage.jsx';
 
 export default function App() {
@@ -21,10 +22,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardPage />} />
-            <Route
-              path="personal-finance"
-              element={<ModulePlaceholderPage moduleKey="personal-finance" />}
-            />
+            <Route path="personal-finance" element={<PersonalFinancePage />} />
             <Route
               path="business-simulation"
               element={<ModulePlaceholderPage moduleKey="business-simulation" />}

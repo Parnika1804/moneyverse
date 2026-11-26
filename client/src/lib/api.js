@@ -41,3 +41,31 @@ export async function fetchProfile() {
   const { data } = await api.get('/profile');
   return data;
 }
+
+export async function startPersonalSimulation() {
+  const { data } = await api.post('/personal/start');
+  return data;
+}
+
+export async function stepPersonalSimulation({
+  runId,
+  savingsPercentage,
+  spendingBudget,
+  loanAmount,
+  repayAmount,
+}) {
+  const { data } = await api.post('/personal/step', {
+    runId,
+    savingsPercentage,
+    spendingBudget,
+    loanAmount,
+    repayAmount,
+  });
+  return data;
+}
+
+export async function fetchPersonalHistory(runId = null) {
+  const params = runId ? { runId } : undefined;
+  const { data } = await api.get('/personal/history', { params });
+  return data;
+}
