@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -175,6 +177,7 @@ function CustomChartTooltip({ active, payload, label }) {
 }
 
 export default function LandingPage() {
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeView, setActiveView] = useState('combined');
   const [apiStatus, setApiStatus] = useState('checking');
@@ -258,13 +261,31 @@ export default function LandingPage() {
                   ? 'Connecting...'
                   : 'API Standby'}
             </span>
-            <a
-              href="#get-started"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300"
-            >
-              Get Started
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            {user ? (
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300"
+              >
+                Dashboard
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.06] hover:text-white"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300"
+                >
+                  Get Started
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </>
+            )}
           </div>
 
           <button
@@ -302,14 +323,34 @@ export default function LandingPage() {
               >
                 Platform
               </a>
-              <a
-                href="#get-started"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 font-semibold text-slate-950"
-              >
-                Get Started
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 font-semibold text-slate-950"
+                >
+                  Dashboard
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <div className="mt-2 flex flex-col gap-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="inline-flex items-center justify-center rounded-xl border border-white/12 bg-white/[0.04] px-4 py-2.5 font-semibold text-white"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 font-semibold text-slate-950"
+                  >
+                    Get Started
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

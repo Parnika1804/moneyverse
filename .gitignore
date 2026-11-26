@@ -17,6 +17,8 @@ server/.env.*
 !server/.env.example
 
 # Cloud / Firebase service account keys
+serviceAccountKey.json
+server/serviceAccountKey.json
 *serviceAccount*.json
 *firebase-adminsdk*.json
 gcp-key*.json
