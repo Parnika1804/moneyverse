@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import LogoutPage from './pages/LogoutPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import PersonalFinancePage from './pages/PersonalFinancePage.jsx';
+import BusinessSimulationPage from './pages/BusinessSimulationPage.jsx';
 import AiMentorPage from './pages/AiMentorPage.jsx';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage.jsx';
 
@@ -24,10 +25,7 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="personal-finance" element={<PersonalFinancePage />} />
-            <Route
-              path="business-simulation"
-              element={<ModulePlaceholderPage moduleKey="business-simulation" />}
-            />
+            <Route path="business-simulation" element={<BusinessSimulationPage />} />
             <Route
               path="learning-hub"
               element={<ModulePlaceholderPage moduleKey="learning-hub" />}

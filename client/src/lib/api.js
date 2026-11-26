@@ -88,3 +88,29 @@ export async function requestMentorAdvisory({ section, runId = null, month = nul
   });
   return data;
 }
+
+export async function startBusinessSimulation(businessType) {
+  const { data } = await api.post('/business/start', { businessType });
+  return data;
+}
+
+export async function stepBusinessSimulation({
+  runId,
+  restockUnits,
+  sellingPrice,
+  marketingSpend,
+}) {
+  const { data } = await api.post('/business/step', {
+    runId,
+    restockUnits,
+    sellingPrice,
+    marketingSpend,
+  });
+  return data;
+}
+
+export async function fetchBusinessHistory(runId = null) {
+  const params = runId ? { runId } : undefined;
+  const { data } = await api.get('/business/history', { params });
+  return data;
+}
