@@ -114,3 +114,21 @@ export async function fetchBusinessHistory(runId = null) {
   const { data } = await api.get('/business/history', { params });
   return data;
 }
+
+export async function fetchLessons() {
+  const { data } = await api.get('/content/lessons');
+  return data;
+}
+
+export async function submitLessonQuiz({ lessonId, answers }) {
+  const { data } = await api.post('/content/quiz', {
+    lessonId,
+    answers,
+  });
+  return data;
+}
+
+export async function fetchLeaderboard() {
+  const { data } = await api.get('/leaderboard');
+  return data;
+}

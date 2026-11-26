@@ -9,8 +9,8 @@ import LogoutPage from './pages/LogoutPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import PersonalFinancePage from './pages/PersonalFinancePage.jsx';
 import BusinessSimulationPage from './pages/BusinessSimulationPage.jsx';
+import LearningHubPage from './pages/LearningHubPage.jsx';
 import AiMentorPage from './pages/AiMentorPage.jsx';
-import ModulePlaceholderPage from './pages/ModulePlaceholderPage.jsx';
 
 export default function App() {
   return (
@@ -26,10 +26,7 @@ export default function App() {
             <Route index element={<DashboardPage />} />
             <Route path="personal-finance" element={<PersonalFinancePage />} />
             <Route path="business-simulation" element={<BusinessSimulationPage />} />
-            <Route
-              path="learning-hub"
-              element={<ModulePlaceholderPage moduleKey="learning-hub" />}
-            />
+            <Route path="learning-hub" element={<LearningHubPage />} />
             <Route path="ai-mentor" element={<AiMentorPage />} />
           </Route>
         </Route>

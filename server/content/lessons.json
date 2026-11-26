@@ -1,0 +1,324 @@
+{
+  "version": "1.0.0",
+  "currency": "INR",
+  "lessons": [
+    {
+      "id": "banking",
+      "title": "Banking",
+      "category": "Core Foundations",
+      "difficulty": "Beginner",
+      "estimatedMinutes": 5,
+      "xpPerQuestion": 25,
+      "description": "Understand savings accounts, digital payments (UPI/NEFT), interest earnings, and how banks keep your money safe.",
+      "explanation": "A bank account is the foundation of your financial life. Savings accounts keep your money liquid and secure while paying modest interest, whereas Fixed Deposits (FDs) lock in your money for a set period in exchange for higher guaranteed interest. In India, bank deposits up to ₹5,00,000 per depositor per bank are insured by DICGC. Modern digital rails like UPI and NEFT let you move money instantly, but tracking statements and maintaining minimum balances helps you avoid unnecessary bank fees.",
+      "example": {
+        "title": "Savings Account vs. Fixed Deposit in Action",
+        "scenario": "Riya receives ₹40,000 from an internship. She keeps ₹15,000 in her savings account (3.5% annual interest) for monthly UPI expenses and places ₹25,000 in a 1-year Fixed Deposit (7% annual interest).",
+        "takeaway": "In one year, her FD earns ₹1,750 in interest while her liquid savings earn roughly ₹525—balancing easy access to cash with higher returns on idle money."
+      },
+      "questions": [
+        {
+          "id": "banking-q1",
+          "question": "If you place ₹20,000 in a 1-year Fixed Deposit earning 7% simple annual interest, how much interest do you earn after 1 year?",
+          "options": [
+            "₹700",
+            "₹1,400",
+            "₹2,000",
+            "₹2,800"
+          ],
+          "correctIndex": 1,
+          "explanation": "7% of ₹20,000 is ₹1,400 (20,000 × 0.07 = 1,400)."
+        },
+        {
+          "id": "banking-q2",
+          "question": "What is the primary advantage of keeping an emergency buffer in a regular savings account rather than a long-term locked investment?",
+          "options": [
+            "High liquidity and immediate access when emergencies occur",
+            "Guaranteed 20% annual returns",
+            "Zero need to track expenses",
+            "Complete exemption from inflation"
+          ],
+          "correctIndex": 0,
+          "explanation": "Savings accounts prioritize safety and instant liquidity (via UPI/ATM/transfers) so emergency funds are always accessible."
+        },
+        {
+          "id": "banking-q3",
+          "question": "Under DICGC rules in India, bank deposits (principal and interest combined) are insured up to what limit per depositor per bank?",
+          "options": [
+            "₹1,00,000",
+            "₹2,50,000",
+            "₹5,00,000",
+            "₹10,00,000"
+          ],
+          "correctIndex": 2,
+          "explanation": "The Deposit Insurance and Credit Guarantee Corporation (DICGC) insures deposits up to ₹5,00,000 per depositor per insured bank."
+        }
+      ]
+    },
+    {
+      "id": "budgeting",
+      "title": "Budgeting",
+      "category": "Personal Finance",
+      "difficulty": "Beginner",
+      "estimatedMinutes": 5,
+      "xpPerQuestion": 25,
+      "description": "Learn how to plan monthly income across needs, wants, and savings so you stay in control of your cash flow.",
+      "explanation": "Budgeting is giving every rupee a purposeful job before you spend it. A popular beginner framework is the 50/30/20 rule: allocate about 50% of take-home income to essential needs (rent, groceries, utilities, transport), 30% to wants (dining out, streaming, hobbies), and at least 20% to savings or debt repayment. Paying yourself first—moving your savings right when salary arrives—prevents lifestyle creep and steadily builds an emergency fund covering 3 to 6 months of essentials.",
+      "example": {
+        "title": "Applying the 50/30/20 Rule to a ₹30,000 Salary",
+        "scenario": "Aarav earns ₹30,000 per month. Using the 50/30/20 guideline, he caps essentials at ₹15,000, discretionary spending at ₹9,000, and automates ₹6,000 directly into savings on payday.",
+        "takeaway": "After 12 months of consistent ₹6,000 monthly deposits, Aarav accumulates ₹72,000 in savings—more than four months of essential living expenses."
+      },
+      "questions": [
+        {
+          "id": "budgeting-q1",
+          "question": "Following the 50/30/20 rule on a monthly income of ₹30,000, how much should be set aside for savings and debt repayment?",
+          "options": [
+            "₹3,000",
+            "₹6,000",
+            "₹9,000",
+            "₹15,000"
+          ],
+          "correctIndex": 1,
+          "explanation": "20% of ₹30,000 equals ₹6,000 dedicated to savings or debt reduction."
+        },
+        {
+          "id": "budgeting-q2",
+          "question": "Which expense is classified as a fixed essential need in a monthly household budget?",
+          "options": [
+            "Weekend movie tickets",
+            "House rent",
+            "Impulse online shopping",
+            "Luxury dining"
+          ],
+          "correctIndex": 1,
+          "explanation": "House rent is a recurring, non-negotiable essential need, whereas entertainment and dining out are discretionary wants."
+        },
+        {
+          "id": "budgeting-q3",
+          "question": "Why does 'paying yourself first' help students and young earners save more consistently?",
+          "options": [
+            "It eliminates monthly rent obligations",
+            "It transfers savings automatically before discretionary spending can consume cash",
+            "It doubles your monthly salary automatically",
+            "It removes the need for an emergency fund"
+          ],
+          "correctIndex": 1,
+          "explanation": "Setting aside savings immediately when income arrives ensures you only spend what remains, preventing end-of-month shortfalls."
+        }
+      ]
+    },
+    {
+      "id": "loans-and-interest",
+      "title": "Loans and Interest",
+      "category": "Credit & Debt",
+      "difficulty": "Beginner",
+      "estimatedMinutes": 6,
+      "xpPerQuestion": 25,
+      "description": "Master principal, interest rates, compounding debt, EMIs, and how to borrow responsibly without falling into a debt trap.",
+      "explanation": "When you borrow money, you repay both the principal (original amount borrowed) and interest (the lender's fee for lending). Even a seemingly small monthly interest rate compounds rapidly: 2% per month is more than 24% per year when compounded! Borrowing for productive assets or emergencies can be helpful if repayments fit comfortably in your budget, but carrying high-interest debt—such as unpaid credit card balances—drains future income and hurts your credit score if payments are missed.",
+      "example": {
+        "title": "How 2% Monthly Interest Compounds on Debt",
+        "scenario": "Meera borrows ₹10,000 at 2% monthly interest. In Month 1, interest adds ₹200 (balance becomes ₹10,200). If she repays ₹2,200, her debt drops to ₹8,000, so Month 2 interest falls to ₹160.",
+        "takeaway": "Paying down principal early shrinks every future month's interest charge, freeing up cash faster."
+      },
+      "questions": [
+        {
+          "id": "loans-q1",
+          "question": "You have ₹15,000 in loan debt carrying 2% monthly interest. How much interest is added in the next month before any repayment?",
+          "options": [
+            "₹150",
+            "₹200",
+            "₹300",
+            "₹600"
+          ],
+          "correctIndex": 2,
+          "explanation": "2% of ₹15,000 is ₹300 (15,000 × 0.02 = 300)."
+        },
+        {
+          "id": "loans-q2",
+          "question": "Which habit is MOST likely to protect and improve your credit score over time?",
+          "options": [
+            "Paying only late fees every quarter",
+            "Maxing out every available loan limit",
+            "Paying EMIs and credit bills on time and keeping debt low",
+            "Ignoring monthly loan statements"
+          ],
+          "correctIndex": 2,
+          "explanation": "Consistent on-time repayments and low credit utilization are the biggest positive drivers of creditworthiness."
+        },
+        {
+          "id": "loans-q3",
+          "question": "What happens if you repay more than the monthly interest charge on a loan?",
+          "options": [
+            "Your loan principal shrinks, lowering future interest costs",
+            "Your interest rate automatically increases",
+            "The extra money disappears without affecting your balance",
+            "Your debt stays unchanged forever"
+          ],
+          "correctIndex": 0,
+          "explanation": "Any repayment above the accrued interest reduces the principal balance, which reduces interest charged in subsequent months."
+        }
+      ]
+    },
+    {
+      "id": "taxation",
+      "title": "Taxation",
+      "category": "Civic & Wealth Literacy",
+      "difficulty": "Intermediate",
+      "estimatedMinutes": 6,
+      "xpPerQuestion": 25,
+      "description": "Learn the difference between direct and indirect taxes, how GST works on everyday purchases, and why filing tax returns matters.",
+      "explanation": "Taxes fund public infrastructure, schools, healthcare, and governance. In India, taxes fall into two main categories: Direct Taxes—such as Income Tax paid directly on your earnings—and Indirect Taxes—such as Goods and Services Tax (GST) included when you buy goods or services. Income tax uses progressive slabs, meaning higher portions of income are taxed at higher rates rather than taxing your entire salary at the top rate. Keeping PAN details accurate and filing an Income Tax Return (ITR) builds official financial documentation needed for loans and visas.",
+      "example": {
+        "title": "Spotting GST on a Café Bill & Planning Take-Home Income",
+        "scenario": "Kabir orders ₹1,000 worth of electronics accessories with 18% GST. The GST adds ₹180, making his final bill ₹1,180. Meanwhile, his side-business tracks invoices so he accurately reports net profit rather than gross revenue.",
+        "takeaway": "Knowing whether a price is pre-tax or tax-inclusive—and tracking deductible business expenses—prevents surprise cash-flow gaps."
+      },
+      "questions": [
+        {
+          "id": "taxation-q1",
+          "question": "An item has a pre-tax price of ₹2,000 and attracts 18% GST. What is the total bill amount?",
+          "options": [
+            "₹2,180",
+            "₹2,360",
+            "₹2,400",
+            "₹2,800"
+          ],
+          "correctIndex": 1,
+          "explanation": "18% GST on ₹2,000 is ₹360, so the total payable amount is ₹2,000 + ₹360 = ₹2,360."
+        },
+        {
+          "id": "taxation-q2",
+          "question": "Which of the following is an example of an indirect tax in India?",
+          "options": [
+            "Personal Income Tax",
+            "Goods and Services Tax (GST)",
+            "Corporate Income Tax",
+            "Capital Gains Tax"
+          ],
+          "correctIndex": 1,
+          "explanation": "GST is collected on the sale of goods and services and passed on to the government by the seller, making it an indirect tax."
+        },
+        {
+          "id": "taxation-q3",
+          "question": "Why is it important for freelancers and small business owners to track valid business expenses?",
+          "options": [
+            "Because income tax is generally computed on net profit after allowable business expenses",
+            "Because tracking expenses cancels GST on personal shopping",
+            "Because banks forbid tracking expenses",
+            "Because revenue and profit are always identical"
+          ],
+          "correctIndex": 0,
+          "explanation": "Documenting legitimate business expenses ensures you calculate accurate net profit instead of overpaying tax on gross revenue."
+        }
+      ]
+    },
+    {
+      "id": "entrepreneurship",
+      "title": "Entrepreneurship",
+      "category": "Business Finance",
+      "difficulty": "Intermediate",
+      "estimatedMinutes": 6,
+      "xpPerQuestion": 25,
+      "description": "Discover unit economics, fixed vs. variable costs, break-even volume, and why cash flow keeps a small business alive.",
+      "explanation": "Running a profitable business requires understanding unit economics—how much money you earn on every single unit sold. Variable costs (like coffee beans or fabric) rise with each unit you produce, while fixed costs (like shop rent and core utilities) must be paid every week regardless of sales. Contribution margin per unit equals Selling Price minus Variable Cost per unit. Dividing fixed costs by contribution margin tells you your break-even point—the minimum units you must sell just to cover expenses.",
+      "example": {
+        "title": "Break-Even Math for a Neighbourhood Café",
+        "scenario": "A café spends ₹80 per cup on ingredients (variable cost), sells each cup for ₹180 (₹100 contribution margin), and pays ₹4,500 per week in rent and utilities (fixed cost).",
+        "takeaway": "The café must sell 45 cups per week (₹4,500 ÷ ₹100) to break even. Every cup sold beyond 45 adds ₹100 toward weekly net profit."
+      },
+      "questions": [
+        {
+          "id": "entrepreneurship-q1",
+          "question": "A bakery makes pastries for ₹120 each and sells them for ₹260 each. What is the gross profit (contribution margin) per pastry?",
+          "options": [
+            "₹120",
+            "₹140",
+            "₹260",
+            "₹380"
+          ],
+          "correctIndex": 1,
+          "explanation": "Contribution margin per unit = Selling Price (₹260) − Variable Cost (₹120) = ₹140."
+        },
+        {
+          "id": "entrepreneurship-q2",
+          "question": "If a shop's weekly fixed rent is ₹4,000 and it earns ₹100 profit margin per item sold, how many items must it sell weekly to break even?",
+          "options": [
+            "20 items",
+            "40 items",
+            "100 items",
+            "400 items"
+          ],
+          "correctIndex": 1,
+          "explanation": "Break-even units = Fixed Costs (₹4,000) ÷ Margin per Unit (₹100) = 40 items."
+        },
+        {
+          "id": "entrepreneurship-q3",
+          "question": "What happens when a business over-orders inventory using all of its available cash?",
+          "options": [
+            "Customer demand automatically triples",
+            "It risks a cash-flow crunch if sales slow down or unexpected repairs occur",
+            "Fixed weekly rent drops to zero",
+            "Profit margins automatically double"
+          ],
+          "correctIndex": 1,
+          "explanation": "Tying up all working capital in unsold stock leaves no liquidity buffer for rent, marketing, or sudden equipment breakdowns."
+        }
+      ]
+    },
+    {
+      "id": "inflation",
+      "title": "Inflation",
+      "category": "Macro & Investing",
+      "difficulty": "Beginner",
+      "estimatedMinutes": 5,
+      "xpPerQuestion": 25,
+      "description": "See how rising prices quietly reduce purchasing power and why your long-term savings must grow faster than inflation.",
+      "explanation": "Inflation is the gradual rise in the general price level of goods and services over time. When inflation is 6% per year, a basket of groceries costing ₹10,000 today will cost roughly ₹10,600 next year. That means idle cash kept in a drawer loses real purchasing power every single year. To build true long-term wealth, investors aim for a positive 'real return'—where investment returns exceed the inflation rate—while still keeping short-term emergency money safe and liquid.",
+      "example": {
+        "title": "Purchasing Power Erosion on ₹10,000",
+        "scenario": "If annual inflation averages 6%, a monthly grocery basket of ₹10,000 rises to ₹10,600 next year. Cash earning 0% buys less, whereas money earning 7% grows to ₹10,700—preserving real value.",
+        "takeaway": "Beating inflation over the long run is essential so your future savings can afford tomorrow's higher living costs."
+      },
+      "questions": [
+        {
+          "id": "inflation-q1",
+          "question": "If your monthly household groceries cost ₹10,000 today and inflation rises by 6% over the year, roughly how much will the same basket cost next year?",
+          "options": [
+            "₹9,400",
+            "₹10,060",
+            "₹10,600",
+            "₹16,000"
+          ],
+          "correctIndex": 2,
+          "explanation": "A 6% increase on ₹10,000 adds ₹600, bringing the cost to ₹10,600."
+        },
+        {
+          "id": "inflation-q2",
+          "question": "If inflation is 6% per year and your savings account pays 3% interest, what happens to your money's real purchasing power?",
+          "options": [
+            "It decreases over time because returns are below inflation",
+            "It increases by 9% every year",
+            "It stays completely unaffected",
+            "It doubles every two years"
+          ],
+          "correctIndex": 0,
+          "explanation": "When your return (3%) is lower than inflation (6%), your real return is negative (−3%), meaning your money buys less over time."
+        },
+        {
+          "id": "inflation-q3",
+          "question": "What does 'real return' measure in personal finance?",
+          "options": [
+            "Only the cash you keep in your wallet",
+            "Investment return after accounting for inflation",
+            "The total GST charged on a purchase",
+            "The maximum loan amount a bank offers"
+          ],
+          "correctIndex": 1,
+          "explanation": "Real return reflects the actual gain in purchasing power after subtracting inflation from your nominal return."
+        }
+      ]
+    }
+  ]
+}

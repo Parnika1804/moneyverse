@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { fetchProfile, initProfile } from '../lib/api';
+import LeaderboardCard from '../components/learning/LeaderboardCard';
 
 const INR_FORMATTER = new Intl.NumberFormat('en-IN', {
   style: 'currency',
@@ -76,6 +77,7 @@ export default function DashboardPage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [leaderboardRefreshKey, setLeaderboardRefreshKey] = useState(0);
   const [error, setError] = useState('');
 
   const loadProfile = useCallback(
@@ -166,7 +168,10 @@ export default function DashboardPage() {
 
         <button
           type="button"
-          onClick={() => loadProfile(true)}
+          onClick={() => {
+            loadProfile(true);
+            setLeaderboardRefreshKey((prev) => prev + 1);
+          }}
           disabled={refreshing}
           className="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-white/12 bg-white/[0.04] px-4 py-2.5 text-xs font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.08] disabled:opacity-50 sm:self-center"
         >
@@ -356,6 +361,13 @@ export default function DashboardPage() {
           )}
         </section>
       </div>
+
+      {/* Live Top-10 Leaderboard */}
+      <LeaderboardCard
+        refreshKey={leaderboardRefreshKey}
+        title="Top 10 Leaderboard"
+        subtitle="See how your XP and level rank across MoneyVerse learners."
+      />
 
       {/* Workspace Navigation Shortcuts */}
       <section>
