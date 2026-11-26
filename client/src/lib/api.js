@@ -1,11 +1,19 @@
 import axios from 'axios';
 import { auth } from './firebase';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
+function resolveApiBaseUrl(rawUrl) {
+  if (typeof rawUrl !== 'string' || rawUrl.trim().length === 0) {
+    return '/api';
+  }
+  const trimmed = rawUrl.trim().replace(/\/+$/, '');
+  return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+}
+
+const baseURL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 
 export const api = axios.create({
   baseURL,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },

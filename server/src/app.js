@@ -11,16 +11,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const defaultClientDistPath = path.resolve(__dirname, '..', '..', '..', 'client', 'dist');
 
+export function parseAllowedOrigins(rawOrigins, nodeEnv = process.env.NODE_ENV) {
+  const configured = (rawOrigins || '')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+
+  if (configured.length > 0) {
+    return nodeEnv === 'production'
+      ? configured
+      : Array.from(new Set([...configured, 'http://localhost:5173', 'http://127.0.0.1:5173']));
+  }
+
+  return ['http://localhost:5173', 'http://127.0.0.1:5173'];
+}
+
 export function createApp({
   serveFrontend = process.env.NODE_ENV === 'production' || process.env.SERVE_FRONTEND === 'true',
   clientDistPath = process.env.CLIENT_DIST_PATH || defaultClientDistPath,
+  corsOrigins = process.env.CORS_ORIGINS || process.env.CLIENT_URL,
 } = {}) {
   const app = express();
 
-  const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173,http://127.0.0.1:5173')
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean);
+  const allowedOrigins = parseAllowedOrigins(corsOrigins, process.env.NODE_ENV);
 
   app.set('trust proxy', 1);
 
@@ -50,12 +63,18 @@ export function createApp({
     cors({
       origin(origin, callback) {
         // Allow same-origin / server-to-server requests (no Origin header) or configured origins
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin) {
+          return callback(null, true);
+        }
+        const normalized = origin.replace(/\/+$/, '');
+        if (allowedOrigins.includes(normalized)) {
           return callback(null, true);
         }
         return callback(null, false);
       },
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   );
 

@@ -2,16 +2,17 @@
 
 **Learn Money by Managing Life & Business.**
 
-MoneyVerse is a gamified financial literacy platform combining a 12-month Personal Finance Simulation, a 12-week Business Simulation (Café, Bakery, Clothing Store), an interactive Learning Hub with Quizzes & XP, a Top-10 Leaderboard, and a provider-independent AI Mentor foundation (ready for Phase 10 Gemini Enterprise integration).
+MoneyVerse is a gamified financial literacy platform featuring a 12-month Personal Finance Simulation, a 12-week Business Simulation (Café, Bakery, Clothing Store), an interactive Learning Hub with 6 INR-based lessons & quizzes, an XP & Level system, a Top-10 Leaderboard, and a provider-independent AI Mentor foundation (ready for Phase 10 Gemini Enterprise integration).
 
 ---
 
 ## Tech Stack
 
 - **Frontend:** React, Vite, Tailwind CSS, React Router, Axios, Lucide React, Recharts, Firebase Auth SDK
-- **Backend:** Node.js 22, Express, Firebase Admin SDK, Cloud Firestore, `@google-cloud/storage`
-- **Cloud & Deployment:** Google Cloud Run (multi-stage Docker container serving both `/api` and the Vite production SPA), Google Cloud Storage
-- **AI Mentor:** Provider-independent read-only foundation (Gemini Enterprise integration planned for Phase 10)
+- **Backend:** Node.js 22, Express, Firebase Admin SDK, Cloud Firestore (`moneyverse-19666`)
+- **Free-Tier Deployment:** **Vercel** (Frontend SPA) + **Render** (Express Backend API) + **Firebase Spark Plan** (Auth + Firestore)
+- **Content Storage:** Local `server/content/lessons.json` fallback (zero billing required; optional Google Cloud Storage via `GCS_BUCKET_NAME`)
+- **AI Mentor:** Provider-independent read-only foundation (Gemini Enterprise planned for Phase 10)
 
 ---
 
@@ -19,28 +20,31 @@ MoneyVerse is a gamified financial literacy platform combining a 12-month Person
 
 ```text
 moneyverse/
-├── client/                  # React + Vite + Tailwind CSS SPA
+├── client/                  # React + Vite + Tailwind CSS SPA (deployed to Vercel)
 │   ├── src/
 │   │   ├── components/      # Dashboard layout, Personal, Business, Leaderboard UI
 │   │   ├── context/         # Firebase Authentication context
 │   │   ├── lib/             # Firebase client & authenticated Axios helpers
 │   │   └── pages/           # Landing, Auth, Dashboard, Simulations, Learning Hub, AI Mentor
+│   ├── vercel.json          # SPA client-side routing rewrites
 │   ├── .env.example
 │   └── package.json
-├── server/                  # Node.js + Express API & Production Static Host
-│   ├── content/             # Local fallback lessons.json (6 INR financial literacy lessons)
+├── server/                  # Node.js + Express API (deployed to Render)
+│   ├── content/             # Local lessons.json (6 INR financial literacy lessons, no GCS billing needed)
 │   ├── src/
-│   │   ├── config/          # Firebase Admin ADC initialization
+│   │   ├── config/          # Firebase Admin (Render env JSON OR Application Default Credentials)
 │   │   ├── controllers/     # Express request handlers
 │   │   ├── middleware/      # Firebase ID token verification
 │   │   ├── routes/          # /health, /profile, /personal, /business, /mentor, /content, /leaderboard
-│   │   ├── services/        # Simulation engines, GCS storage, quiz/XP, leaderboard, AI provider interface
-│   │   ├── app.js           # Express app + production client/dist static serving
-│   │   └── index.js         # Cloud Run PORT / 0.0.0.0 listener & graceful shutdown
+│   │   ├── services/        # Simulation engines, quiz/XP, leaderboard, storage fallback, AI adapter interface
+│   │   ├── app.js           # Express app, CORS, Helmet, production static fallback
+│   │   └── index.js         # PORT / 0.0.0.0 listener & graceful shutdown
 │   ├── tests/               # Backend unit & Firestore integration tests
 │   ├── .env.example
 │   └── package.json
-├── Dockerfile               # Multi-stage production container (Vite build + Express runtime)
+├── render.yaml              # Render free-tier backend Blueprint
+├── vercel.json              # Root Vercel SPA build & rewrite config
+├── Dockerfile               # Optional multi-stage container (Cloud Run / self-hosting)
 ├── .dockerignore
 ├── .gcloudignore
 ├── .gitignore
@@ -54,34 +58,19 @@ moneyverse/
 
 ### 1. Environment Variables
 
-Copy the example templates (never commit `.env` files or service account keys):
+Copy the templates and fill in your local values (never commit `.env` files or service account keys):
 
 ```bash
 cp client/.env.example client/.env
 cp server/.env.example server/.env
 ```
 
-- **`client/.env` (public Firebase Web App config):**
-  - `VITE_FIREBASE_API_KEY`
-  - `VITE_FIREBASE_AUTH_DOMAIN`
-  - `VITE_FIREBASE_PROJECT_ID`
-  - `VITE_FIREBASE_APP_ID`
-- **`server/.env` (local backend config):**
-  - `PORT=5000`
-  - `GCP_PROJECT_ID=<your-gcp-project-id>`
-  - `GCS_BUCKET_NAME=<optional-gcs-bucket-name>` (omit or leave unset to use `server/content/lessons.json`)
-  - Local Firebase Admin auth: either run `gcloud auth application-default login` or set `GOOGLE_APPLICATION_CREDENTIALS=./serviceAccountKey.json` pointing to a gitignored local key inside `server/`.
-
-### 2. Install Dependencies
+### 2. Install & Run
 
 ```bash
 npm run install:all
-```
 
-### 3. Run Frontend & Backend
-
-```bash
-# Run both together
+# Start both servers together
 npm run dev
 
 # Or in separate terminal tabs
@@ -89,13 +78,13 @@ npm run dev:server   # http://127.0.0.1:5000
 npm run dev:client   # http://localhost:5173 (proxies /api -> http://127.0.0.1:5000)
 ```
 
-### 4. Build & Test
+### 3. Build & Test
 
 ```bash
-# Build frontend production bundle (client/dist)
+# Production frontend build
 npm run build
 
-# Run backend unit tests
+# Backend unit tests
 npm --prefix server test
 ```
 
@@ -115,90 +104,85 @@ npm --prefix server test
 
 ---
 
-## Production Deployment (Google Cloud Run)
+## Free-Tier Deployment Guide (Render + Vercel — No Credit Card / No Billing)
 
-MoneyVerse deploys as a single container on **Google Cloud Run**: the multi-stage root `Dockerfile` compiles the React/Vite SPA and serves both `/api/*` and the static frontend from Express on `0.0.0.0:$PORT`.
+This deployment architecture uses **Render Free Tier** for the Express API, **Vercel Hobby (Free) Tier** for the React/Vite SPA, and your existing **Firebase (`moneyverse-19666`) Spark Plan** for Authentication and Cloud Firestore. Lessons are served from the bundled `server/content/lessons.json` fallback so **Google Cloud Storage billing is not required**.
 
-### 1. Required Google Cloud APIs
+### 1. GitHub → Render Backend Deployment
 
-Enable these APIs in your GCP project before deploying:
+1. Push your repository to GitHub (verify `.env` and `serviceAccountKey.json` are NOT committed).
+2. Sign in to [Render](https://dashboard.render.com/) with GitHub.
+3. Click **New + → Blueprint** (uses `render.yaml` automatically) **or** click **New + → Web Service** and connect your GitHub repository with:
+   - **Root Directory:** `server`
+   - **Runtime:** `Node`
+   - **Build Command:** `npm install --omit=dev`
+   - **Start Command:** `npm start`
+   - **Instance Type:** `Free`
+   - **Health Check Path:** `/api/health`
 
-```bash
-gcloud services enable \
-  run.googleapis.com \
-  cloudbuild.googleapis.com \
-  artifactregistry.googleapis.com \
-  firestore.googleapis.com \
-  storage.googleapis.com \
-  identitytoolkit.googleapis.com
-```
+### 2. Render Environment Variables
 
-### 2. Service Account & IAM Permissions (Application Default Credentials)
+In your Render Web Service → **Environment**, add the following variables (do **not** commit credentials to Git):
 
-On Cloud Run, **do NOT upload or mount `serviceAccountKey.json`**. Firebase Admin and `@google-cloud/storage` automatically authenticate via Cloud Run's attached IAM service account (Application Default Credentials).
+| Key | Value | Notes |
+| --- | --- | --- |
+| `NODE_ENV` | `production` | Enables production logging and strict CORS |
+| `GCP_PROJECT_ID` | `moneyverse-19666` | Your existing Firebase / Firestore project ID |
+| `CLIENT_URL` | `https://<your-app>.vercel.app` | Set this after Step 3 (comma-separate multiple URLs if needed; no trailing slash required) |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` | *(paste full contents of your service account JSON, or its Base64 string)* | Marked secret in Render; read cleanly by `server/src/config/firebase.js` |
+| `GCS_BUCKET_NAME` | *(leave blank)* | Keeps local `server/content/lessons.json` fallback with zero billing |
 
-Grant the Cloud Run runtime service account:
-- **Cloud Datastore User** (`roles/datastore.user`) — read/write Cloud Firestore (`users/{uid}`, runs, quiz progress, leaderboard)
-- **Storage Object Viewer** (`roles/storage.objectViewer`) — read `lessons/lessons.json` from `GCS_BUCKET_NAME` (if using Cloud Storage)
-- **Firebase Authentication Viewer** (`roles/firebaseauth.viewer`) — verify Firebase ID tokens
+> **Tip for `FIREBASE_SERVICE_ACCOUNT_JSON`:** You can minify your local `server/serviceAccountKey.json` to a single line (or Base64-encode it via `[Convert]::ToBase64String([IO.File]::ReadAllBytes("server/serviceAccountKey.json"))` in PowerShell) and paste it directly into Render's `FIREBASE_SERVICE_ACCOUNT_JSON` secret variable. Never commit the file itself.
 
-### 3. Production Environment Variables
+Click **Deploy Web Service** and note your Render backend URL, e.g.:
+`https://moneyverse-api.onrender.com`
 
-#### Build-Time Arguments (Public Firebase Web App Config Only)
-Passed only during `docker build` so Vite embeds public client config into `client/dist`:
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_APP_ID`
-- `VITE_API_BASE_URL=/api` (default; uses same-origin Express `/api`)
+### 3. GitHub → Vercel Frontend Deployment
 
-> **Never** pass service account keys, `GCS_BUCKET_NAME`, or Gemini API secrets as `VITE_*` build arguments.
+1. Sign in to [Vercel](https://vercel.com/) with GitHub.
+2. Click **Add New → Project** and import your MoneyVerse GitHub repository.
+3. Configure project settings:
+   - **Root Directory:** `client` *(recommended; `client/vercel.json` handles SPA rewrites, and root `vercel.json` also works if left at repo root)*
+   - **Framework Preset:** `Vite`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
 
-#### Cloud Run Runtime Environment Variables
-Configured on the Cloud Run service:
-- `NODE_ENV=production`
-- `GCP_PROJECT_ID=<your-gcp-project-id>`
-- `GCS_BUCKET_NAME=<your-gcs-lessons-bucket>` *(optional; falls back to bundled `server/content/lessons.json` if omitted or object missing)*
-- `PORT` is injected automatically by Cloud Run (`8080`).
+### 4. Vercel Environment Variables
 
-### 4. Optional: Upload Lessons to Google Cloud Storage
+In Vercel → **Project Settings → Environment Variables**, add these public variables for **Production** (and Preview if desired):
 
-```bash
-gcloud storage cp server/content/lessons.json gs://<your-gcs-lessons-bucket>/lessons/lessons.json
-```
+| Key | Value |
+| --- | --- |
+| `VITE_API_BASE_URL` | `https://<your-render-service>.onrender.com/api` |
+| `VITE_FIREBASE_API_KEY` | Your Firebase Web App API Key (`moneyverse-19666`) |
+| `VITE_FIREBASE_AUTH_DOMAIN` | `moneyverse-19666.firebaseapp.com` |
+| `VITE_FIREBASE_PROJECT_ID` | `moneyverse-19666` |
+| `VITE_FIREBASE_APP_ID` | Your Firebase Web App ID |
 
-### 5. Build Container & Deploy to Cloud Run
+> Never put `FIREBASE_SERVICE_ACCOUNT_JSON`, private keys, or backend secrets in Vercel environment variables.
 
-1. **Create an Artifact Registry repository** (one-time):
-   ```bash
-   gcloud artifacts repositories create moneyverse \
-     --repository-format=docker \
-     --location=asia-south1
-   ```
+Deploy the project and note your Vercel URL, e.g. `https://moneyverse.vercel.app`.
+Then go back to **Render → Environment** and set `CLIENT_URL=https://moneyverse.vercel.app` (Render will automatically redeploy with the updated CORS origin).
 
-2. **Build & push the image** (passing only public `VITE_*` build args):
-   ```bash
-   docker build \
-     --build-arg VITE_FIREBASE_API_KEY=<firebase-web-api-key> \
-     --build-arg VITE_FIREBASE_AUTH_DOMAIN=<project-id>.firebaseapp.com \
-     --build-arg VITE_FIREBASE_PROJECT_ID=<project-id> \
-     --build-arg VITE_FIREBASE_APP_ID=<firebase-web-app-id> \
-     -t asia-south1-docker.pkg.dev/<project-id>/moneyverse/moneyverse:latest .
+### 5. Firebase Authentication Authorized Domains
 
-   docker push asia-south1-docker.pkg.dev/<project-id>/moneyverse/moneyverse:latest
-   ```
+1. Open [Firebase Console](https://console.firebase.google.com/) → project **`moneyverse-19666`**.
+2. Go to **Build → Authentication → Settings → Authorized domains**.
+3. Click **Add domain** and add your deployed Vercel domain (e.g., `moneyverse.vercel.app`, without `https://`).
+4. Keep `localhost` authorized so local development continues working.
 
-3. **Deploy to Cloud Run:**
-   ```bash
-   gcloud run deploy moneyverse \
-     --image asia-south1-docker.pkg.dev/<project-id>/moneyverse/moneyverse:latest \
-     --region asia-south1 \
-     --platform managed \
-     --allow-unauthenticated \
-     --set-env-vars "NODE_ENV=production,GCP_PROJECT_ID=<project-id>,GCS_BUCKET_NAME=<your-gcs-lessons-bucket>"
-   ```
+### 6. Testing the Deployed Application
 
-4. **Post-Deploy Verification:**
-   - Add your Cloud Run domain (`https://<service-url>`) to **Firebase Console → Authentication → Settings → Authorized domains**.
-   - Verify health check: `curl https://<service-url>/api/health` → `{"status":"ok"}`.
-   - Open `https://<service-url>/` in a browser and confirm SPA navigation, login/signup, simulations, Learning Hub, and Leaderboard work end to end.
+1. **Backend Health Check:**
+   Open `https://<your-render-service>.onrender.com/api/health` in a browser (or `curl`) — expect `{"status":"ok"}`. *(First request after 15 minutes of inactivity may take ~30–50 seconds while Render's free instance wakes up.)*
+2. **Landing Page & API Status:**
+   Open `https://<your-app>.vercel.app/` — verify the landing page loads and the header badge shows **API Online**.
+3. **Authentication & Dashboard:**
+   Sign up or log in at `/signup` or `/login`, confirm `/dashboard` loads your Firestore profile (`wallet`, `xp`, `level`, `badges`, `recentActivities`, and Top-10 Leaderboard).
+4. **SPA Deep-Link Refresh:**
+   Refresh the browser on `/dashboard/personal-finance`, `/dashboard/business-simulation`, `/dashboard/learning-hub`, and `/dashboard/ai-mentor` — verify Vercel serves the SPA without `404`.
+5. **Protected APIs & End-to-End Flows:**
+   - Start and step a Personal Finance month (`POST /api/personal/start`, `POST /api/personal/step`).
+   - Start and step a Business Simulation week (`POST /api/business/start`, `POST /api/business/step`).
+   - Load the 6 lessons (`GET /api/content/lessons`), submit a quiz (`POST /api/content/quiz`), confirm XP increases and duplicate attempts award `+0 XP`, and check `GET /api/leaderboard`.
+   - Open `/dashboard/ai-mentor` and confirm read-only Firestore run retrieval works cleanly.

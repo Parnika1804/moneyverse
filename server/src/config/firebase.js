@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applicationDefault, getApp, getApps, initializeApp } from 'firebase-admin/app';
+import { applicationDefault, cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
@@ -35,6 +35,55 @@ function resolveCredentialsPath() {
   }
 }
 
+/**
+ * Parses service account credentials from Render/cloud environment variables when provided,
+ * otherwise returns null so Firebase Admin uses Google Application Default Credentials.
+ */
+export function parseServiceAccountFromEnv(env = process.env) {
+  const rawJson = env.FIREBASE_SERVICE_ACCOUNT_JSON?.trim();
+  if (rawJson) {
+    let jsonText = rawJson;
+    if (!jsonText.startsWith('{')) {
+      try {
+        jsonText = Buffer.from(rawJson, 'base64').toString('utf8');
+      } catch {
+        throw new Error('FIREBASE_SERVICE_ACCOUNT_JSON is neither valid JSON nor valid Base64.');
+      }
+    }
+
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonText);
+    } catch {
+      throw new Error('FIREBASE_SERVICE_ACCOUNT_JSON contains invalid JSON.');
+    }
+
+    if (!parsed.client_email || !parsed.private_key) {
+      throw new Error(
+        'FIREBASE_SERVICE_ACCOUNT_JSON must include "client_email" and "private_key".',
+      );
+    }
+
+    return {
+      projectId: parsed.project_id || env.GCP_PROJECT_ID || env.GOOGLE_CLOUD_PROJECT,
+      clientEmail: parsed.client_email,
+      privateKey: String(parsed.private_key).replace(/\\n/g, '\n'),
+    };
+  }
+
+  const clientEmail = env.FIREBASE_CLIENT_EMAIL?.trim();
+  const privateKey = env.FIREBASE_PRIVATE_KEY?.trim();
+  if (clientEmail && privateKey) {
+    return {
+      projectId: env.FIREBASE_PROJECT_ID || env.GCP_PROJECT_ID || env.GOOGLE_CLOUD_PROJECT,
+      clientEmail,
+      privateKey: privateKey.replace(/\\n/g, '\n'),
+    };
+  }
+
+  return null;
+}
+
 export function getFirebaseApp() {
   if (initializedApp) {
     return initializedApp;
@@ -45,11 +94,20 @@ export function getFirebaseApp() {
     return initializedApp;
   }
 
-  resolveCredentialsPath();
+  const envServiceAccount = parseServiceAccountFromEnv(process.env);
+  const projectId =
+    envServiceAccount?.projectId || process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT;
 
-  const projectId = process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT;
+  let credential;
+  if (envServiceAccount) {
+    credential = cert(envServiceAccount);
+  } else {
+    resolveCredentialsPath();
+    credential = applicationDefault();
+  }
+
   const options = {
-    credential: applicationDefault(),
+    credential,
     ...(projectId ? { projectId } : {}),
   };
 
